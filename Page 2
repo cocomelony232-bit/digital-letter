@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Love Letter Opened</title>
+    <style>
+        :root { --bg: #0d0c0e; --pink: #f472b6; --top-bar: #1c1a22; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, sans-serif; }
+        
+        body { background: var(--bg); color: #ffffff; min-height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+
+        /* Top Control Bar Layer */
+        .top-navbar { display: flex; align-items: center; justify-content: space-between; background: var(--top-bar); padding: 12px 24px; border-bottom: 1px solid #25232a; z-index: 10; }
+        .nav-left-pill { background: #2a2233; border: 1px solid #423054; padding: 6px 14px; border-radius: 20px; color: var(--pink); font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 8px; }
+        .nav-right-controls { display: flex; gap: 10px; align-items: center; }
+        .circle-btn { width: 34px; height: 34px; background: #252329; border: 1px solid #322f38; border-radius: 50%; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; }
+        .circle-btn.active { background: var(--pink); color: #fff; border-color: var(--pink); }
+
+        /* Immersive Letter Display Wrapper */
+        .letter-stage { flex-grow: 1; display: flex; align-items: center; justify-content: center; position: relative; padding: 20px; }
+
+        /* Full Bleed Blurred Ambient Background Container */
+        .portrait-canvas { 
+            position: relative;
+            width: 100%;
+            max-width: 380px; 
+            height: 80vh;
+            border-radius: 24px;
+            /* Placeholder aesthetic dark portrait matching the image framing */
+            background: url('https://unsplash.com') center center / cover no-repeat;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            animation: loadScene 1.5s ease-out forwards;
+        }
+
+        /* Darkened Vignette Overlay Layer */
+        .portrait-canvas::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(13,12,14,0.65), rgba(13,12,14,0.92));
+            z-index: 1;
+        }
+
+        /* Centered Cursive Content Typography Typography Container */
+        .letter-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 80%;
+            animation: textReveal 2s ease-out forwards;
+        }
+
+        .recipient-name {
+            font-family: 'Georgia', serif;
+            font-style: italic;
+            font-size: 1.8rem;
+            color: var(--pink);
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .message-body {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.75);
+            letter-spacing: 0.5px;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .sender-signature {
+            font-family: 'Georgia', serif;
+            font-style: italic;
+            font-size: 1.4rem;
+            color: var(--pink);
+            margin-top: 4px;
+        }
+
+        @keyframes loadScene {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes textReveal {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Toolbar Frame -->
+    <div class="top-navbar">
+        <div class="nav-left-pill">❤️ Love Letter</div>
+        <div class="nav-right-controls">
+            <div class="circle-btn active">📱</div>
+            <div class="circle-btn">💻</div>
+            <div class="circle-btn">🔄</div>
+            <div class="circle-btn">×</div>
+        </div>
+    </div>
+
+    <!-- Letter Presentation Area -->
+    <div class="letter-stage">
+        
+        <!-- Live Cinematic Ambient Panel Card -->
+        <div class="portrait-canvas">
+            
+            <!-- Exact Scripted Letter Fields mapping from screenshot layout -->
+            <div class="letter-content">
+                <h1 class="recipient-name">xai</h1>
+                <p class="message-body">With all my love,</p>
+                <h2 class="sender-signature">cy</h2>
+            </div>
+            
+        </div>
+
+    </div>
+
+</body>
+</html>
