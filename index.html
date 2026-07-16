@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Digital Love Letter</title>
+    <style>
+        :root {
+            --bg-color: #fbf9f6;
+            --primary-color: #1e1e1e;
+            --accent-color: #e25c5c;
+            --card-bg: #ffffff;
+            --muted-text: #6e6e73;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--primary-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        header {
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            color: var(--muted-text);
+            font-size: 1.1rem;
+        }
+
+        /* Envelope / Cover Section */
+        .envelope-container {
+            width: 100%;
+            max-width: 480px;
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 40px 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            text-align: center;
+            border: 1px solid rgba(0,0,0,0.04);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .envelope-container:hover {
+            transform: translateY(-2px);
+        }
+
+        .heart-seal {
+            font-size: 3.5rem;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+            100% { transform: scale(1); }
+        }
+
+        .btn-unlock {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 14px 28px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        /* Interactive Content Block (Hidden until clicked) */
+        .main-letter-content {
+            display: none;
+            width: 100%;
+            max-width: 520px;
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .letter-card {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 30px 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+            border: 1px solid rgba(0,0,0,0.04);
+        }
+
+        .letter-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .letter-text {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: #333;
+            white-space: pre-wrap;
+        }
+
+        /* Image Placeholder Carousel Layout */
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .photo-box {
+            background-color: #f0ede8;
+            border-radius: 12px;
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--muted-text);
+            font-size: 0.85rem;
+            text-align: center;
+            padding: 10px;
+            border: 1px dashed #d1cbd1;
+        }
+
+        /* Music Controls */
+        .music-player {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #fdfcfb;
+            padding: 12px 18px;
+            border-radius: 16px;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .play-dot {
+            width: 12px;
+            height: 12px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .playing .play-dot {
+            animation: wave 1.2s infinite alternate;
+        }
+
+        @keyframes wave {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            100% { transform: scale(1.3); opacity: 1; }
+        }
+
+        footer {
+            margin-top: auto;
+            padding: 40px 0 20px 0;
+            font-size: 0.8rem;
+            color: var(--muted-text);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>2luv Inspired Letter</h1>
+        <p>A private space built purely for your memories.</p>
+    </header>
+
+    <!-- Cover Stage -->
+    <div class="envelope-container" id="coverStage" onclick="unlockLetter()">
+        <div class="heart-seal">❤️</div>
+        <h2 style="font-weight: 500; margin-bottom: 8px;">You have a private letter</h2>
+        <p style="color: var(--muted-text); font-size: 0.95rem; margin-bottom: 15px;">Sent securely via shared web space.</p>
+        <button class="btn-unlock">Open Message</button>
+    </div>
+
+    <!-- Active Letter Stage -->
+    <div class="main-letter-content" id="letterStage">
+        
+        <!-- Audio Experience Card -->
+        <div class="letter-card">
+            <h3>🎵 Soundtrack</h3>
+            <div class="music-player" id="playerWrapper">
+                <div>
+                    <span style="font-weight: 500; font-size: 0.95rem; display: block;">Romantic Background Ambience</span>
+                    <span style="font-size: 0.8rem; color: var(--muted-text);">Lofi Background Track</span>
+                </div>
+                <!-- Swap out source URL for any hosted MP3 Link -->
+                <audio id="bgMusic" loop src="https://soundhelix.com"></audio>
+                <button onclick="toggleMusic(event)" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">▶️</button>
+            </div>
+        </div>
+
+        <!-- Text Card -->
+        <div class="letter-card">
+            <h3>💌 My Message</h3>
+            <p class="letter-text">Dear Person,
+
+This is where your deeply personal digital love letter goes. Express your thoughts, remember silly private inside jokes, and write about all the dates that stay close to your heart. 
+
+Unlike apps requiring accounts, this simple page belongs directly to you and will stay online for as long as your repository remains active.
+
+With all my heart,
+Your Name</p>
+        </div>
+
+        <!-- Media Timeline Card -->
+        <div class="letter-card">
+            <h3>📸 Shared Moments</h3>
+            <p style="color: var(--muted-text); font-size: 0.9rem; margin-bottom: 10px;">Replace these placeholder items with live picture URLs inside your code.</p>
+            <div class="photo-gallery">
+                <div class="photo-box">Our First Outing<br>(Image Link Here)</div>
+                <div class="photo-box">Funniest Memory<br>(Image Link Here)</div>
+                <div class="photo-box">Roadtrips & Travel<br>(Image Link Here)</div>
+                <div class="photo-box">Most Recent Date<br>(Image Link Here)</div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>© 2026 Crafted with ❤️ via GitHub Pages Boilerplate</p>
+    </footer>
+
+    <script>
+        function unlockLetter() {
+            document.getElementById('coverStage').style.display = 'none';
+            document.getElementById('letterStage').style.display = 'block';
+            
+            // Automatically try starting audio context when user taps open
+            const audio = document.getElementById('bgMusic');
+            audio.play().then(() => {
+                document.getElementById('playerWrapper').classList.add('playing');
+            }).catch(() => {
+                console.log("Audio autoplay restricted. User must hit play explicitly.");
+            });
+        }
+
+        function toggleMusic(e) {
+            e.stopPropagation(); // Avoid triggering container clicks
+            const audio = document.getElementById('bgMusic');
+            const btn = e.target;
+            
+            if (audio.paused) {
+                audio.play();
+                btn.innerText = "⏸️";
+                document.getElementById('playerWrapper').classList.add('playing');
+            } else {
+                audio.pause();
+                btn.innerText = "▶️";
+                document.getElementById('playerWrapper').classList.remove('playing');
+            }
+        }
+    </script>
+</body>
+</html>
