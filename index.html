@@ -3,290 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Private Love Letter</title>
+    <title>Digital Love Letter Preview</title>
     <style>
-        :root {
-            --bg-color: #fdf8f5;
-            --primary-color: #2c2523;
-            --accent-color: #d47a7a;
-            --card-bg: #ffffff;
-            --muted-text: #8a7e7a;
-        }
+        :root { --bg: #131215; --card: #1c1a1f; --txt: #ffffff; --muted: #79767e; --pink: #f472b6; --top-bar: #1c1a22; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, sans-serif; }
+        
+        body { background: var(--bg); color: var(--txt); min-height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        }
+        /* Accurate Top Toolbar Layer */
+        .top-navbar { display: flex; align-items: center; justify-content: space-between; background: var(--top-bar); padding: 12px 24px; border-bottom: 1px solid #25232a; }
+        .nav-left-pill { background: #2a2233; border: 1px solid #423054; padding: 6px 14px; border-radius: 20px; color: #f472b6; font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 8px; }
+        .nav-right-controls { display: flex; gap: 10px; align-items: center; }
+        .circle-btn { width: 34px; height: 34px; background: #252329; border: 1px solid #322f38; border-radius: 50%; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; cursor: pointer; }
+        .circle-btn.active { background: #f472b6; color: #fff; border-color: #f472b6; }
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--primary-color);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            min-height: 100vh;
-        }
+        /* Main Center Workspace Canvas */
+        .workspace { flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; padding: 20px; }
 
-        header {
-            text-align: center;
-            margin-top: 40px;
-            margin-bottom: 30px;
-        }
+        /* Immersive Dark Sealed Envelope Card UI */
+        .envelope-outer { background: #1c1922; border: 1px solid #2d2636; border-radius: 20px; width: 100%; max-width: 320px; padding: 40px 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 25px 50px rgba(0,0,0,0.4); text-align: center; cursor: pointer; transition: transform 0.3s ease; }
+        .envelope-outer:hover { transform: translateY(-4px); }
 
-        header h1 {
-            font-size: 2.2rem;
-            font-weight: 600;
-            letter-spacing: -0.5px;
-            color: var(--primary-color);
-            margin-bottom: 8px;
-        }
+        .wax-seal { width: 30px; height: 30px; background: var(--pink); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; color: #fff; box-shadow: 0 0 15px rgba(244, 114, 182, 0.4); margin-bottom: 20px; animation: glowPulse 2s infinite; }
+        @keyframes glowPulse { 0% { box-shadow: 0 0 10px rgba(244,114,182,0.4); } 50% { box-shadow: 0 0 22px rgba(244,114,182,0.7); } 100% { box-shadow: 0 0 10px rgba(244,114,182,0.4); } }
 
-        header p {
-            color: var(--muted-text);
-            font-size: 1rem;
-        }
+        .envelope-label { font-size: 0.8rem; color: var(--muted); margin: 4px 0; }
+        .envelope-value { font-size: 0.9rem; color: #d1ced6; margin-bottom: 12px; font-weight: 500; }
 
-        /* Envelope / Cover Section */
-        .envelope-container {
-            width: 100%;
-            max-width: 480px;
-            background: var(--card-bg);
-            border-radius: 24px;
-            padding: 50px 24px;
-            box-shadow: 0 10px 30px rgba(212, 122, 122, 0.08);
-            text-align: center;
-            border: 1px solid rgba(212, 122, 122, 0.15);
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
+        /* Tap Invitation Graphics below Envelope */
+        .interaction-hint { margin-top: 25px; text-align: center; }
+        .hint-icon { font-size: 1.4rem; color: var(--muted); animation: floatIndicator 1.8s ease-in-out infinite alternate; }
+        .hint-text { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.5px; margin-top: 5px; }
 
-        .envelope-container:hover {
-            transform: translateY(-3px);
-        }
-
-        .heart-seal {
-            font-size: 4rem;
-            color: var(--accent-color);
-            margin-bottom: 20px;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.08); }
-            100% { transform: scale(1); }
-        }
-
-        .btn-unlock {
-            display: inline-block;
-            background-color: var(--accent-color);
-            color: #fff;
-            padding: 14px 32px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 500;
-            margin-top: 25px;
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
-            box-shadow: 0 4px 12px rgba(214, 122, 122, 0.3);
-        }
-
-        /* Interactive Content Block */
-        .main-letter-content {
-            display: none;
-            width: 100%;
-            max-width: 500px;
-            animation: fadeIn 0.8s ease forwards;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .letter-card {
-            background: var(--card-bg);
-            border-radius: 24px;
-            padding: 30px 24px;
-            margin-bottom: 24px;
-            box-shadow: 0 10px 30px rgba(212, 122, 122, 0.04);
-            border: 1px solid rgba(212, 122, 122, 0.1);
-        }
-
-        .letter-card h3 {
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: var(--accent-color);
-        }
-
-        .letter-text {
-            font-size: 1.05rem;
-            line-height: 1.8;
-            color: #4a3f3b;
-            white-space: pre-wrap;
-        }
-
-        /* Media Presentation Box */
-        .featured-image-container {
-            width: 100%;
-            border-radius: 16px;
-            overflow: hidden;
-            margin-top: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-
-        .featured-image-container img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        /* Music Controls */
-        .music-player {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: #fffcfb;
-            padding: 14px 20px;
-            border-radius: 16px;
-            border: 1px solid rgba(214, 122, 122, 0.15);
-        }
-
-        .music-info {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .music-title {
-            font-weight: 600;
-            font-size: 0.95rem;
-            color: var(--primary-color);
-        }
-
-        .music-sub {
-            font-size: 0.8rem;
-            color: var(--muted-text);
-            margin-top: 2px;
-        }
-
-        .control-btn {
-            background: var(--accent-color);
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            color: white;
-            font-size: 1rem;
-            box-shadow: 0 3px 8px rgba(214, 122, 122, 0.2);
-            transition: transform 0.2s;
-        }
-
-        .control-btn:active {
-            transform: scale(0.95);
-        }
-
-        footer {
-            margin-top: auto;
-            padding: 40px 0 20px 0;
-            font-size: 0.8rem;
-            color: var(--muted-text);
-            text-align: center;
-        }
+        @keyframes floatIndicator { 0% { transform: translateY(0); } 100% { transform: translateY(6px); } }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>A Digital Space For Us</h1>
-        <p>Turn up your volume before opening the seal.</p>
-    </header>
-
-    <!-- Cover Stage -->
-    <div class="envelope-container" id="coverStage" onclick="unlockLetter()">
-        <div class="heart-seal">✉️</div>
-        <h2 style="font-weight: 600; font-size: 1.4rem; margin-bottom: 8px;">For Your Eyes Only</h2>
-        <p style="color: var(--muted-text); font-size: 0.95rem;">Click anywhere to unlock this memory.</p>
-        <button class="btn-unlock">Open Letter</button>
+    <!-- Upper Creation Ribbon Context Layout -->
+    <div class="top-navbar">
+        <div class="nav-left-pill">
+            <span style="font-size: 0.8rem;">❤️</span> Love Letter
+        </div>
+        <div class="nav-right-controls">
+            <!-- Simulated Active Status Device Indicators -->
+            <div class="circle-btn active">📱</div>
+            <div class="circle-btn">💻</div>
+            <div class="circle-btn">🔄</div>
+            <div class="circle-btn">⤢</div>
+        </div>
     </div>
 
-    <!-- Active Letter Stage -->
-    <div class="main-letter-content" id="letterStage">
+    <!-- Centered Stage Canvas Area -->
+    <div class="workspace">
         
-        <!-- Audio Experience Card -->
-        <div class="letter-card">
-            <h3>🎵 Our Melody</h3>
-            <div class="music-player">
-                <div class="music-info">
-                    <span class="music-title">Purple Dream</span>
-                    <span class="music-sub">Ghostrifter Official • Romantic Lofi</span>
-                </div>
-                <!-- Hosted Royalty-Free MP3 Link from Chosic -->
-                <audio id="bgMusic" loop src="https://chosic.com"></audio>
-                <button class="control-btn" id="playBtn" onclick="toggleMusic(event)">▶</button>
-            </div>
+        <!-- Interactive Letter Envelope Target Element -->
+        <div class="envelope-outer" onclick="openLetterPackage()">
+            <div class="wax-seal">✦</div>
+            
+            <div class="envelope-label">To:</div>
+            <div class="envelope-value" id="toName">Amigo</div>
+            
+            <div class="envelope-label">From:</div>
+            <div class="envelope-value" id="fromName">Me</div>
         </div>
 
-        <!-- Media Presentation Card -->
-        <div class="letter-card">
-            <h3>📸 Favorite Memory</h3>
-            <div class="featured-image-container">
-                <!-- Aesthetic Unsplash Image Link Installed -->
-                <img src="https://unsplash.com" alt="Romantic Aesthetic View">
-            </div>
-        </div>
-
-        <!-- Text Card -->
-        <div class="letter-card">
-            <h3>💌 To Someone Special,</h3>
-            <p class="letter-text">I wanted to build a quiet corner on the internet just for us. 
-
-Every single day spent with you is full of small moments that I never want to forget. Thank you for making life so much brighter, lighter, and completely beautiful. 
-
-This page will live right here on the web, acting as a tiny time capsule for us to look back on whenever we need a reminder of where it all started.</p>
+        <!-- Dynamic Tap indicator labels -->
+        <div class="interaction-hint">
+            <div class="hint-icon">☝️</div>
+            <div class="hint-text">Tap to open</div>
         </div>
 
     </div>
-
-    <footer>
-        <p>© 2026 Built with love and hosted privately.</p>
-    </footer>
 
     <script>
-        const audio = document.getElementById('bgMusic');
-        const playBtn = document.getElementById('playBtn');
-
-        function unlockLetter() {
-            document.getElementById('coverStage').style.display = 'none';
-            document.getElementById('letterStage').style.display = 'block';
-            
-            // Attempt to trigger music immediately on user unlock action
-            audio.play().then(() => {
-                playBtn.innerText = "⏸";
-            }).catch((err) => {
-                console.log("Autoplay blocked. Press play manually inside the card.", err);
-            });
-        }
-
-        function toggleMusic(e) {
-            e.stopPropagation(); // Stop parent layout triggers
-            if (audio.paused) {
-                audio.play();
-                playBtn.innerText = "⏸";
-            } else {
-                audio.pause();
-                playBtn.innerText = "▶";
-            }
+        // Triggered upon clicking the central envelope element block
+        function openLetterPackage() {
+            alert("Opening your customized live digital letter experience view...");
+            // You can replace this alert line with window.location = 'your-part1-url.html' to redirect seamlessly!
         }
     </script>
 </body>
